@@ -1,0 +1,61 @@
+<template>
+  <style>
+    img {
+      border-style: solid;
+    }
+
+    #caption {
+      text-align: center;
+      font-size: 125%;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+  </style>
+  <img>
+  <div id="caption">
+    <slot name="caption"></slot>
+  </div>
+</template>
+
+<script>
+
+(function(){
+  var importingDoc = document;
+  var thisDoc = importingDoc.currentScript.ownerDocument;
+  var template = thisDoc.querySelector('template').content;
+
+
+  var element = Object.create(HTMLElement.prototype);
+
+  element.createdCallback = function() {
+    var shadowRoot = this.attachShadow({mode: 'open'});
+    shadowRoot.appendChild(document.importNode(template, true));
+
+    if(!this.getAttribute('height')) this.setAttribute('height', 400);
+    if(!this.getAttribute('width')) this.setAttribute('width', 400);
+
+    this.refreshImage();
+
+  }
+
+  element.attributeChangedCallback = function(attr, oldVal, newVal){
+    if(attr === 'height' || attr === 'width'){
+      this.refreshImage();
+    }
+  }
+
+  element.refreshImage = function(){
+    height = this.getAttribute('height');
+    width = this.getAttribute('width');
+
+    var img = this.shadowRoot.querySelector('img');
+    img.src =`http://unsplash.it/${width}/${height}/?random&${Math.random()}`;
+  }
+
+  document.registerElement('unsplash-el', {
+    prototype: element
+  });
+
+}());
+
+</script>
