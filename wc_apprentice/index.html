@@ -5,8 +5,19 @@
 
   <link rel="stylesheet" href="prism.css">
   <link rel="import" href="my-element.html">
-
+  <link rel="import" href="import-a.html">
+  <link rel="import" href="dom-content.html" id="dom-content-import">
   <style>
+    #append-div {
+      border-style: solid;
+      display: inline-block;
+      padding: 10px;
+    }
+
+    #append-div + button {
+      display: block;
+    }
+
   </style>
 
 </head>
@@ -65,6 +76,47 @@ element.refreshImage = function(){
   <button onclick="document.getElementById('refreshable').refreshImage();">Refresh Image</button>
 
   <h2>HTML Imports</h2>
+
+  <h3>Using HTML Import</h3>
+  <pre><code class="language-markup">&lt;link rel="import" href="my-element.html">
+</code></pre>
+
+  <h3>HTML Sub Import Deduping</h3>
+  <p>This page imports a file called import-a.html which imports another file that also imports import-a.html. Even though the file is imported multiple times, viewing the network tab in the dev tools shows each file is only downloaded once.</p>
+
+  <pre><code class="language-markup">&lt;-- import-a.html -->
+&lt;link rel="import" href="import-b.html"></code></pre>
+  <pre><code class="language-markup">&lt;-- import-b.html -->
+&lt;link rel="import" href="import-a.html"></code></pre>
+
+
+  <h3>Accessing the Content of an Import</h3>
+
+  <div id="append-div"></div>
+  <button onclick="loadDom()">Load DOM from import</button>
+
+  <script>
+    function loadDom(){
+      var appendDiv = document.getElementById('append-div');
+      var importedDom = document.getElementById('dom-content-import').import.querySelector('div');
+      var clone = importedDom.cloneNode(true);
+      appendDiv.append(clone);
+    }
+  </script>
+
+  <pre><code class="language-markup">&lt;div id="append-div">&lt;/div>
+&lt;button onclick="loadDom()">Load DOM from import&lt;/button>
+
+&lt;script>
+  function loadDom(){
+    var appendDiv = document.getElementById('append-div');
+    var importedDom = document.getElementById('dom-content-import').import.querySelector('div');
+    var clone = importedDom.cloneNode(true);
+    appendDiv.append(clone);
+  }
+&lt;/script></code></pre>
+}
+
   <h2>Template Element</h2>
   <h2>Custom Elements</h2>
 
