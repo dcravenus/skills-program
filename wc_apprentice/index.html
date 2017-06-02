@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <title>My Element</title>
+
+  <link rel="stylesheet" href="prism.css">
+  <link rel="import" href="my-element.html">
+
+  <style>
+  </style>
+
+</head>
+<body>
+  <h1>Web Components - Apprentice</h1>
+
+  <h2>Shadow DOM</h2>
+  <h3>Creation of Shadow Roots</h3>
+
+  <pre><code class="language-js">var shadowRoot = this.attachShadow({mode: 'open'});
+shadowRoot.appendChild(document.importNode(template, true));</code></pre>
+
+  <h3>Slot Tag</h3>
+  <pre><code class="language-markup">&lt!-- HTML within component--&gt;
+&lt;div id="caption"&gt;
+  &lt;slot name="caption"&gt;&lt;/slot&gt;
+&lt;/div&gt;</code></pre>
+
+  <pre><code class="language-markup">&lt!-- HTML that uses the component--&gt;
+&lt;unsplash-el>
+  &lt;span slot="caption">This is a caption&lt;/span>
+&lt;/unsplash-el></code></pre>
+
+    <unsplash-el>
+      <span slot="caption">This is a caption</span>
+    </unsplash-el>
+
+  <h3>Stylistic Isolation</h3>
+  <pre><code class="language-css">/* CSS within component */
+  img {
+      border-style: solid;
+    }</code></pre>
+
+  <div>
+    <p>Images within the component have a border</p>
+    <unsplash-el height="200" width="200"></unsplash-el>
+  </div>
+  <div>
+    <p>No border is applied to images outside the component</p>
+    <img src="http://unsplash.it/200/200?random">
+  </div>
+
+
+  <h3>Javascript Isolation</h3>
+    <p>Only explicitly exposed JavaScript functions are available outside the component.</p>
+    <pre><code class="language-js">// JS within component
+element.refreshImage = function(){
+  height = this.getAttribute('height');
+  width = this.getAttribute('width');
+
+  var img = this.shadowRoot.querySelector('img');
+  img.src =`http://unsplash.it/${width}/${height}/?random&${Math.random()}`;
+}</code></pre>
+
+  <unsplash-el id="refreshable"></unsplash-el><br>
+  <button onclick="document.getElementById('refreshable').refreshImage();">Refresh Image</button>
+
+  <h2>HTML Imports</h2>
+  <h2>Template Element</h2>
+  <h2>Custom Elements</h2>
+
+  <script src="prism.js"></script>
+</body>
+</html>
