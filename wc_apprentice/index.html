@@ -117,8 +117,42 @@ element.refreshImage = function(){
 &lt;/script></code></pre>
 }
 
-  <h2>Template Element</h2>
-  <h2>Custom Elements</h2>
+  <h2>Template Element / Custom Elements</h2>
+
+  <h3>Creation of a Template</h3>
+  <pre><code class="language-markup">&lt;template>
+  &lt;style>
+    :host {
+      display: inline-block;
+    }
+    img {
+      border-style: solid;
+    }
+
+    #caption {
+      text-align: center;
+      font-size: 125%;
+      font-weight: bold;
+      font-family: sans-serif;
+    }
+  &lt;/style>
+  &lt;img>
+  &lt;div id="caption">
+    &lt;slot name="caption"></slot>
+  &lt;/div>
+&lt;/template></code></pre>
+
+  <h3>Utilization of a Template and Creation of an Element</h3>
+  <pre><code class="language-js">var importingDoc = document;
+var thisDoc = importingDoc.currentScript.ownerDocument;
+var template = thisDoc.querySelector('template').content;
+
+var element = Object.create(HTMLElement.prototype);
+
+element.createdCallback = function() {
+  var shadowRoot = this.attachShadow({mode: 'open'});
+  shadowRoot.appendChild(document.importNode(template, true));
+}</code></pre>
 
   <script src="prism.js"></script>
 </body>
