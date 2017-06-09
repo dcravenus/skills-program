@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <title>CSS - Apprentice</title>
+
+  <link rel="stylesheet" href="prism.css">
+
+  <style>
+    @counter-style emoji {
+      system: cyclic;
+      symbols: 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🍈 🍒 🍑 🍍 🥝;
+      suffix: " ";
+    }
+
+    .emoji-list {
+      list-style: emoji;
+    }
+  </style>
+
+</head>
+<body>
+
+  <h1>CSS - Apprentice</h1>
+
+  <h2>CSS Current</h2>
+
+  <h3>Latest Stable CSS</h3>
+
+  <h4>Counter Styles</h4>
+  <p>(Only works in Firefox)</p>
+
+  <pre><code class="language-markup">&lt;style>
+@counter-style emoji {
+  system: cyclic;
+  symbols: 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🍈 🍒 🍑 🍍 🥝;
+  suffix: " ";
+}
+
+.emoji-list {
+  list-style: emoji;
+}
+&lt;/style>
+
+&lt;ul class="emoji-list">
+  &lt;li>Item One&lt;/li>
+  &lt;li>Item Two&lt;/li>
+  &lt;li>Item Three&lt;/li>
+  &lt;li>Item Four&lt;/li>
+  &lt;li>Item Five&lt;/li>
+&lt;/ul></code></pre>
+
+  <ul class="emoji-list">
+    <li>Item One</li>
+    <li>Item Two</li>
+    <li>Item Three</li>
+    <li>Item Four</li>
+    <li>Item Five</li>
+  </ul>
+
+  <h4>CSS3 Fonts</h4>
+
+  <script src="prism.js"></script>
+</body>
+</html>
